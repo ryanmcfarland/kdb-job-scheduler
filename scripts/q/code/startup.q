@@ -1,16 +1,6 @@
-/
-
-export SCH_HOME=/home/ryanm/code/kdb-scheduler/
-
-q scripts/q/code/startup.q -init main -debug 1 -p 5001
-q scripts/q/code/startup.q -init worker -debug 1 -p 5002 -sport 5001 -shost localhost -wname test1
-
-
-q)a:raze (system "pwd")
-q)setenv[`SCH_HOME;a]
-system "l ",(getenv`SCH_HOME),"/scripts/q/code/scheduler.q"
-system "l ",(getenv`SCH_HOME),"/scripts/q/schema/scheduler.q"
-\
+/ KDB Start-up script, loads in all files possible within q/code and q/schema
+/ Attempts to execute init provided through the cmd line
+/ load files but will not run init if -debug is not provided
 
 .kdb.startup.args:{
     .args.addReq[`init;`;"Check namespace to load in"];
@@ -24,6 +14,8 @@ system "l ",(getenv`SCH_HOME),"/scripts/q/schema/scheduler.q"
     qfiles:{string ` sv x,y}[dir;] each (key dir:hsym `$(getenv`SCH_HOME),"/scripts/q/code/") except `startup.q;
     schemafiles:{string ` sv x,y}[dir;] each (key dir:hsym `$(getenv`SCH_HOME),"/scripts/q/schema/");
     {[x] @[{show x; system "l ",x};x;{[x;y]'y,"Issue loading file - ",x}[x]]} each qfiles,schemafiles;
+    // hacky way to keep original schemas without creating complex init 
+    {[x] (` sv ``scheduler,x) set .scheduler.schema[x]} each (key `.scheduler.schema) except `;
     };
 
 .kdb.startup.runProcessInit:{[args]

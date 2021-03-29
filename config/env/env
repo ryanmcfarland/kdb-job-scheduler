@@ -1,0 +1,14 @@
+export QHOME="/home/ryanm/q"
+export QLIC="/home/ryanm/q"
+export q='rlwrap -r /home/ryanm/q/l64/q '
+
+export QINIT=/home/ryanm/q/loadFiles.q
+
+export SCH_HOME=/home/ryanm/code/kdb-scheduler/
+export SCH_BASH=${SCH_HOME}/scripts/bash/
+export SCH_Q_CODE=${SCH_HOME}/scripts/q/code/
+export SCH_JOBS=${SCH_HOME}/config/jobs/
+
+export SCH_LOGS=/home/ryanm/log/scheduler/
+export SCH_LOGS_PROCESS=${SCH_LOGS}/process
+export SCH_LOGS=/home/ryanm/log/scheduler/

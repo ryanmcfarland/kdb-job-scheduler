@@ -22,8 +22,8 @@
 
 / Main scheduler function that is called via .z.ts, this is executed on the main process
 .scheduler.run:{[]
-    jobs:select id, name, host, cmd from .scheduler.jobs where sTime <= .z.P, status in `TODO`SUCCESS`FAILED;
-    jobs:distinct jobs uj select id, name, host, cmd from .scheduler.jobs where name in dependant, status = `JOB_UP_SUCCESS;
+    jobs:jobs:select id, name, host, cmd from .scheduler.jobs where sTime <= .z.P, status in `TODO`SUCCESS`FAILED, null dependant;
+    jobs:distinct jobs uj select id, name, host, cmd from .scheduler.jobs where status = `JOB_UP_SUCCESS;
     .scheduler.runJob each jobs;
     };
 
@@ -94,6 +94,7 @@
 / Main will send command to be run which will be executed by this function
 .scheduler.i.runWrkCmd:{[job]
     .debug.job:job;
+    .log.info["Job Receieved: ",string[job[`name]]];
     logname:string[job[`name]],"-",({ssr[x;y;""]}/[string[.z.Z];".T:"]),".log";
     `.scheduler.workerJobs upsert (job[`id];job[`name];.z.P;job[`cmd];logname;`RUNNING);
     cmd:(getenv`SCH_BASH),"/execute.sh -c ",job[`cmd]," > ",(getenv`SCH_LOGS),logname," 2>&1 &";
@@ -113,5 +114,6 @@
         [.log.error["Job Failure - ",string[job[`name]]," - sending status update"];
         @[neg .scheduler.main.handle;(`.scheduler.i.jobStatus;job;`failure)];
         delete from `.scheduler.workerJobs where id = job[`id]];
-        delete from `.scheduler.workerJobs where id = job[`id]];
+    ];
     };
+

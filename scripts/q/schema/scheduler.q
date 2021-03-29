@@ -35,6 +35,3 @@ schema.history:([]
     eTime:`timestamp$();
     result:`$();
     logname:());
-
-// hacky way to keep original schemas without creating complex init 
-{[x] (` sv ``scheduler,x) set .scheduler.schema[x]} each (key `.scheduler.schema) except `;

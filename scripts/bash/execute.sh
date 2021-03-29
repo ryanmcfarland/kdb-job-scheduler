@@ -1,6 +1,8 @@
 #!/bin/sh
 
-. /home/ryanm/.profile
+## source in envirnoment variables
+
+. /home/ryanm/code/kdb-scheduler/config/env/env
 . /home/ryanm/code/kdb-scheduler/scripts/bash/log.sh
 
 ## wrapper script to run the job commands on the host, enales better trackability of job success or failure
