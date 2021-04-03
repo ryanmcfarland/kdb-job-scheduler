@@ -2,8 +2,8 @@
 
 ## source in envirnoment variables
 
-. /home/ryanm/code/kdb-scheduler/config/env/env
-. /home/ryanm/code/kdb-scheduler/scripts/bash/log.sh
+. ${SCH_HOME}/config/env/env.cfg
+. ${SCH_HOME}/scripts/bash/log.sh
 
 ## wrapper script to run the job commands on the host, enales better trackability of job success or failure
 
@@ -22,7 +22,7 @@ while getopts "c:" arg; do
     esac
 done
 
-if [ -z $CMD ];then log_err "NO CMD HAS BEEN PROVIDED - EXITING WITH ERROR 6"; exit 6;fi
+if [ -z "${CMD}" ];then log_err "NO CMD HAS BEEN PROVIDED - EXITING WITH ERROR 6"; exit 6;fi
 
 log_info "Running: ${CMD}"
 echo ""

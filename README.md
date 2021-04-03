@@ -20,7 +20,11 @@ Note: It's not perfect but it gives a good baseline for something I want to work
 ## Example - Schuduler RunTime
 
 ```
-Start all process -> /home/ryanm/code/kdb-scheduler/scripts/bash/startup.sh
+Start all process ->
+
+export SCH_HOME="/home/ryanm/code/kdb-scheduler/"
+export SCH_LOGS="/home/ryanm/code/kdb-scheduler/logs/"
+${SCH_HOME}/scripts/bash/startup.sh
 
 Connect to main (localhost:5001): .scheduler.jobs
 ```
@@ -69,9 +73,9 @@ Connect to main (localhost:5001): .scheduler.history
 - qArguments to be loaded at start-up -> [ryanmcfarland/kdb-qArguments](https://github.com/ryanmcfarland/kdb-qArguments)
 
 ## Improvements-To-Be-Made
-- Current flaw is that workers connect to main process, this should be other way round
+- ~~Current flaw is that workers connect to main process, this should be other way round~~ DONE
 - A web interface to run jobs on command
-- Better id & name mapping within schuduler, hard to run an individual job.
+- ~~Better id & name mapping within schuduler, hard to run an individual job.~~ DONE
 - Smarter logic regarding sTime, eTime & job-dependancies
 - Smarter logic to source unix envirnoment variables
 - Send history to potential tp,rdb,hdb set-up so not tracked within scheudler main process.

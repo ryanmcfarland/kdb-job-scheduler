@@ -2,9 +2,11 @@
 
 \d .scheduler
 
-schema.workerTable:([] 
+schema.connTable:(
+    [
+        name:`$()
+    ] 
     handle:`int$();
-    name:`$();
     host:`$();
     port:`int$());
 
